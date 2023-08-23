@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="duty">
+	<!-- <select id="login" resultType="MemberVo">
+		SELECT 
+			NO
+			,DEPARTMENT_NO
+			,POSITION_NO
+			,ID
+			,PASSWORD
+			,NAME
+			,STATUS
+			,POSITION_TYPE
+			,ENROLL_DATE
+			,REGISTRATION_NUMBER
+			,EMAIL
+			,PROFILE
+			,PHONE_NUMBER
+			,OFFICE_NUMBER
+			,LICENSE_NUMBER
+			,YEAR_SALARY
+			,SIGN
+		FROM MEMBER
+		WHERE ID = #{id}
+		AND PASSWORD = #{password}
+		
+	</select>
+	
+	<select id="idFind" resultType="MemberVo">
+   		SELECT
+   			NO
+			,DEPARTMENT_NO
+			,POSITION_NO
+			,ID
+			,PASSWORD
+			,NAME
+			,STATUS
+			,POSITION_TYPE
+			,ENROLL_DATE
+			,REGISTRATION_NUMBER
+			,EMAIL
+			,PROFILE
+			,PHONE_NUMBER
+			,OFFICE_NUMBER
+			,LICENSE_NUMBER
+			,YEAR_SALARY
+			,SIGN
+   		FROM MEMBER
+   		WHERE NAME = #{name}
+   		AND EMAIL = #{email}
+   		AND PHONE_NUMBER = #{phoneNumber}
+   </select>
+	
+	<update id="certification">
+		UPDATE MEMBER SET 
+		PASSWORD = #{password}
+		WHERE ID = #{id}
+	</update>
+	
+	<select id="getBoardCnt" resultType="int">
+      SELECT COUNT(NO) FROM MEMBER
+      WHERE STATUS = 'O'
+      <if test="searchType != null and searchType != '' and searchValue != null and searchValue != ''">		
+	  AND ${searchType} LIKE '%${searchValue}%'
+	  </if>
+   </select>
+
+   <select id="selectMemberList" resultType="com.kh.app.member.vo.MemberVo">
+      SELECT 
+
+		M.NO
+		,M.DEPARTMENT_NO
+		,M.POSITION_NO
+		,M.ID
+		,M.PASSWORD
+		,M.NAME
+		,M.STATUS
+		,M.POSITION_TYPE
+		,M.ENROLL_DATE
+		,M.REGISTRATION_NUMBER
+		,M.EMAIL
+		,M.PROFILE
+		,M.PHONE_NUMBER
+		,M.OFFICE_NUMBER
+		,M.LICENSE_NUMBER
+		,M.YEAR_SALARY
+		,M.SIGN
+		,D.NAME AS departmentName
+		,P.NAME AS positionName
+
+	  FROM MEMBER M
+	  JOIN DEPARTMENT D
+	  ON M.DEPARTMENT_NO = D.NO
+	  JOIN POSITION P
+	  ON M.POSITION_NO = P.NO
+      WHERE M.STATUS = 'O'
+      
+      <if test="searchType == 'name' and searchValue != '' and searchValue != null">		
+	  AND M.${searchType} LIKE '%${searchValue.toString()}%'
+	  </if>
+	  
+	  <if test="searchType == 'phoneNumber' and searchValue != '' and searchValue != null">		
+	  AND M.${searchType} LIKE '%${searchValue.toString()}%'
+	  </if>
+	  
+	  <if test="searchType == 'status' and searchValue != '' and searchValue != null">		
+	  AND M.${searchType} LIKE '%${searchValue.toString()}%'
+	  </if>
+      
+      <if test="searchType == 'departmentName' and searchValue != '' and searchValue != null">		
+	  AND D.NAME LIKE '%${searchValue.toString()}%'
+	  </if>
+      <if test="searchType == 'positionName' and searchValue != '' and searchValue != null">		
+	  AND P.NAME LIKE '%${searchValue.toString()}%'
+	  </if>
+	  
+   </select>
+   
+   
+   <select id="getMemberByNo" resultType="com.kh.app.member.vo.MemberVo">
+   SELECT 
+		M.NO
+		,M.DEPARTMENT_NO
+		,M.POSITION_NO
+		,M.ID
+		,M.PASSWORD
+		,M.NAME
+		,M.STATUS
+		,M.POSITION_TYPE
+		,M.ENROLL_DATE
+		,M.REGISTRATION_NUMBER
+		,M.EMAIL
+		,M.PROFILE
+		,M.PHONE_NUMBER
+		,M.OFFICE_NUMBER
+		,M.LICENSE_NUMBER
+		,M.YEAR_SALARY
+		,M.SIGN
+		,D.NAME AS departmentName
+		,P.NAME AS positionName
+	
+		  FROM MEMBER M
+		  JOIN DEPARTMENT D
+		  ON M.DEPARTMENT_NO = D.NO
+		  JOIN POSITION P
+		  ON M.POSITION_NO = P.NO
+	     WHERE M.STATUS = 'O'
+	     AND M.NO = ${no}
+   </select>
+   
+   <update id="delete">
+	    UPDATE MEMBER
+		SET STATUS = 'X'
+		WHERE NO = ${no}
+   </update>
+
+
+   <update id="edit">
+	    UPDATE MEMBER
+		SET DEPARTMENT_NO = ${departmentNO}
+		AND
+		POSITION_NO = ${positionNo}
+		WHERE NO = ${no}
+   </update> -->
+   
+   <insert id="insert">
+   	INSERT INTO DUTY
+   	NO,
+	MEMBER_NO,
+	DUTY_DAY
+	VALUES
+	(
+	SEQ_DUTY_NO.NEXTVAL,
+	${title},
+	${start}
+	)
+   </insert>
+   
+   <select id="getList" resultType="com.kh.app.duty.vo.DutyVo">
+	SELECT
+	D.NO,
+	DE.NAME AS dname ,
+	P.NAME AS pname ,
+	TO_CHAR(D.DUTY_DAY, 'yyyyMMdd') AS "start",
+	M.NAME AS mname
+	FROM DUTY D
+	JOIN MEMBER M ON D.MEMBER_NO = M.NO
+	JOIN DEPARTMENT DE ON DE.NO = M.DEPARTMENT_NO
+	JOIN POSITION P ON P.NO = M.POSITION_NO
+	<if test="searchType == 'mname' and searchValue != null">
+	WHERE M.NAME LIKE '%${searchValue}%'
+	</if>
+	<if test="searchType == 'start' and searchValue != null">
+	WHERE D.DUTY_DAY LIKE '%${searchValue}%'
+	</if>
+	ORDER BY "DUTY_DAY" DESC
+	</select>
+	
+		<insert id="put">
+		INSERT INTO DUTY
+		(
+		NO,
+		MEMBER_NO,
+		DUTY_DAY
+		)
+		VALUES
+		(
+		SEQ_DUTY_NO.NEXTVAL,
+		${mno},
+		#{start}
+		)
+	</insert>
+   
+   <update id="edit">
+   	UPDATE DUTY
+	SET
+	MEMBER_NO = ${mno}, 
+	DUTY_DAY = TO_TIMESTAMP('${dutyDay}' , 'YYYY-MM-DD')
+	WHERE NO = ${no}
+   </update>
+   
+   <select id="getBoardCnt" resultType="int">
+      SELECT COUNT(D.NO) FROM DUTY D
+      <if test="searchType == 'mname' and searchValue != null">
+      JOIN MEMBER M
+      ON D.MEMBER_NO = M.NO
+      WHERE M.NAME LIKE '%${searchValue}%'
+      </if>
+      
+      <if test="searchType == 'start' and searchValue != null">
+      WHERE D.DUTY_DAY LIKE '%${searchValue}%'
+      </if>
+   </select>
+   
+   
+   <select id="getDutyByNo" resultType="com.kh.app.duty.vo.DutyVo">
+  SELECT
+	D.NO AS no ,
+	DE.NAME AS dname ,
+	P.NAME AS pname ,
+	TO_CHAR(D.DUTY_DAY, 'yyyyMMdd') AS "start",
+	M.NAME AS mname ,
+	M.NO AS mno
+	FROM DUTY D
+	JOIN MEMBER M ON D.MEMBER_NO = M.NO
+	JOIN DEPARTMENT DE ON DE.NO = M.DEPARTMENT_NO
+	JOIN POSITION P ON P.NO = M.POSITION_NO
+	WHERE D.NO = ${no}
+   </select>
+   
+   <select id="getMemberList" resultType="com.kh.app.member.vo.MemberVo">
+   	SELECT
+   	NO ,
+   	NAME 
+   	FROM MEMBER
+   	WHERE STATUS = 'O'
+   </select>
+   
+</mapper>

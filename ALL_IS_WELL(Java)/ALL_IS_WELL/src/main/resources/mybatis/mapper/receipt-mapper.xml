@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="receipt">
+	<!-- 환자 조회 -->
+	<select id="selectList" resultType="com.kh.app.patient.vo.PatientVo">
+		SELECT 
+			NO
+			,NAME
+			,GENDER
+			,REGISTRATION_NUMBER
+			,PHONE_NUMBER
+			,EMAIL
+			,CAUTION	
+		FROM PATIENT
+		<if test="searchType == 'name' and searchValue != '' and searchValue != null">		
+		WHERE ${searchType} LIKE '%${searchValue}%'
+		</if>
+		<if test="searchType == 'email' and searchValue != '' and searchValue != null">		
+		WHERE ${searchType} LIKE '%${searchValue}%'
+		</if>
+		ORDER BY NO DESC
+	</select>
+	
+	<select id="getListCnt" resultType="int">
+		SELECT COUNT(*)
+		FROM PATIENT
+		
+	
+	    <where>
+	        <if test="searchType == 'name' and searchValue != '' and searchValue != null">
+	            AND NAME LIKE '%${searchValue}%'
+	        </if>
+	
+	        <if test="searchType == 'email' and searchValue != '' and searchValue != null">
+	            AND EMAIL LIKE '%${searchValue}%'
+	        </if>
+	
+	        
+	    </where>
+	</select>
+	
+	<select id="selectSearchList" resultType="com.kh.app.patient.vo.PatientVo">
+		SELECT 
+			NO
+			,NAME
+			,GENDER
+			,REGISTRATION_NUMBER
+			,PHONE_NUMBER
+			,EMAIL
+			,CAUTION	
+		FROM PATIENT
+		WHERE NAME=#{name}
+		OR GENDER=#{gender}		
+	</select>
+	
+	<!-- 환자 신규 등록 -->
+	<insert id="regist">
+		INSERT INTO PATIENT
+		(
+			NO
+			,NAME
+			,GENDER
+			,REGISTRATION_NUMBER
+			,PHONE_NUMBER
+			,EMAIL
+			,CAUTION
+		)
+		VALUES
+		(
+			SEQ_PATIENT_NO.NEXTVAL
+			,#{name}
+			,#{gender}
+			,#{registrationNumber}
+			,#{phoneNumber}
+			,#{email}
+			,#{caution}
+		)
+	</insert>
+	
+	<!-- 환자 증상 내용 -->
+	<insert id="registContent">
+		INSERT INTO RECEIPT
+		(
+			NO
+			,PATIENT_NO
+			,SYMPTOM
+		)
+		VALUES
+		(
+			SEQ_RECEIPT_NO.NEXTVAL
+			,#{patientNo}
+			,#{symptom}
+		)
+	</insert>
+	
+	<!-- 환자 선택 -->
+	<select id="selectOneList" resultType="com.kh.app.patient.vo.PatientVo">
+		SELECT 
+			NO
+			,NAME
+			,GENDER
+			,REGISTRATION_NUMBER
+			,PHONE_NUMBER
+			,EMAIL
+			,CAUTION	
+		FROM PATIENT
+		WHERE NO = #{no}
+	</select>
+	
+	<select id="registList" resultType="com.kh.app.patient.vo.PatientVo">
+		SELECT 
+			R.NO
+			,NAME
+			,GENDER
+			,REGISTRATION_NUMBER
+			,PHONE_NUMBER
+			,EMAIL
+			,CAUTION
+            , R.SYMPTOM
+		FROM RECEIPT R
+		JOIN PATIENT P ON R.PATIENT_NO = P.NO
+		ORDER BY NO DESC
+	</select>
+	
+	<select id="infoUpdate" resultType="com.kh.app.patient.vo.PatientVo">
+		SELECT 
+			R.NO
+			,NAME
+			,GENDER
+			,REGISTRATION_NUMBER
+			,PHONE_NUMBER
+			,EMAIL
+			,CAUTION
+            , R.SYMPTOM
+		FROM RECEIPT R
+		JOIN PATIENT P ON R.PATIENT_NO = P.NO
+		WHERE R.NO = #{no}
+	</select>
+	
+	<update id="infoUpdateUpdate">
+		UPDATE RECEIPT SET
+	    SYMPTOM = #{symptom} 
+	    WHERE NO = #{no}
+		
+	</update>
+	
+	<select id="selectRegistList" resultType="com.kh.app.receipt.vo.ReceiptVo">
+		SELECT
+			R.NO
+			,R.PATIENT_NO
+			,SYMPTOM
+            ,P.NAME
+		FROM RECEIPT R
+        JOIN PATIENT P ON P.NO= R.PATIENT_NO
+		WHERE R.NO = #{no}
+	</select>
+	
+	<insert id="insertDiagnosis">
+		INSERT INTO DIAGNOSIS
+		(
+			RECEIPT_NO
+			, DAY
+			, MEDICAL_RECORD
+		)
+		VALUES
+		(
+			#{rno}
+			,SYSDATE
+			,#{medicalRecord}
+		)
+	</insert>
+	
+</mapper>

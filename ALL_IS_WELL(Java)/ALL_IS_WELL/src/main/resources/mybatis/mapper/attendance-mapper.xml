@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="attendance">
+
+ 	<select id="getAttendanceList" resultType="com.kh.app.attendance.vo.AttendanceVo">
+	    SELECT *
+	    FROM (
+	        SELECT
+	            A.NO,
+	            MEMBER_NO,
+	            M.NAME,
+	            PRESENCE_TIME,
+	            LEAVE_TIME,
+	            A.STATUS,
+	            ROW_NUMBER() OVER (ORDER BY PRESENCE_TIME DESC) AS RN
+	        FROM ATTENDANCE A
+	        JOIN MEMBER M ON A.MEMBER_NO = M.NO
+	        WHERE MEMBER_NO = #{no}
+	    )
+	    WHERE RN > 1
+	</select>
+	
+	<select id="getAttendanceListCnt" resultType="int">
+		SELECT COUNT(*)
+		FROM ATTENDANCE
+		WHERE MEMBER_NO = #{no}
+	</select>
+	
+	<select id="getPresentAttendance" resultType="com.kh.app.attendance.vo.AttendanceVo">
+	    SELECT *
+	    FROM (
+	        SELECT
+	            A.NO,
+	            MEMBER_NO,
+	            M.NAME,
+	            PRESENCE_TIME,
+	            LEAVE_TIME,
+	            A.STATUS,
+	            ROW_NUMBER() OVER (ORDER BY PRESENCE_TIME DESC) AS RN
+	        FROM ATTENDANCE A
+	        JOIN MEMBER M ON A.MEMBER_NO = M.NO
+	        WHERE MEMBER_NO = #{no}
+	    )
+	    WHERE RN = 1
+	</select>
+
+	<!-- 관리자 근태 조회(개수) -->
+	<select id="getAttendanceListAdminCnt" resultType="int">
+	    SELECT COUNT(*)
+	    FROM ATTENDANCE A
+	    JOIN MEMBER M ON M.NO = A.MEMBER_NO
+	    <if test="searchType == 'position'">
+	        JOIN POSITION P ON P.NO = M.POSITION_NO
+	    </if>
+	    <if test="searchType == 'department'">
+	        JOIN DEPARTMENT D ON D.NO = M.DEPARTMENT_NO
+	    </if>
+	
+	    <where>
+	        <if test="searchType == 'name' and searchValue != '' and searchValue != null">
+	            AND M.NAME LIKE '%${searchValue}%'
+	        </if>
+	
+	        <if test="searchType == 'position' and searchValue != '' and searchValue != null">
+	            AND P.NAME LIKE '%${searchValue}%'
+	        </if>
+	
+	        <if test="searchType == 'department' and searchValue != '' and searchValue != null">
+	            AND D.NAME LIKE '%${searchValue}%'
+	        </if>
+	    </where>
+	</select>
+	
+	<!-- 관리자 근태 조회 -->
+	<select id="getAttendanceListAdmin" resultType="com.kh.app.attendance.vo.AttendanceVo">
+		SELECT 
+		    M.NAME MEMBER_NAME,
+		    PRESENCE_TIME,
+		    LEAVE_TIME,
+		    A.STATUS,
+		    A.NO NO,
+		    D.NAME DEPARTMENT_NAME,
+		    P.NAME POSITION_NAME
+		FROM MEMBER M
+		JOIN ATTENDANCE A ON M.NO = A.MEMBER_NO
+		JOIN DEPARTMENT D ON M.DEPARTMENT_NO = D.NO
+		JOIN POSITION P ON M.POSITION_NO = P.NO
+		
+	<if test="searchType == 'name' and searchValue != '' and searchValue != null">		
+		WHERE M.${searchType} LIKE '%${searchValue}%'
+	</if>
+	
+	<if test="searchType == 'position' and searchValue != '' and searchValue != null">		
+		WHERE P.NAME LIKE '%${searchValue}%'
+	</if>
+	
+	<if test="searchType == 'department' and searchValue != '' and searchValue != null">		
+		WHERE D.NAME LIKE '%${searchValue}%'
+	</if>
+
+		ORDER BY PRESENCE_TIME DESC
+	</select>
+	
+	
+</mapper>

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="main">
+	
+	<!-- 출근 -->
+   <insert id="attend">
+      INSERT INTO ATTENDANCE
+      (
+         NO
+         ,MEMBER_NO
+         ,PRESENCE_TIME
+      )
+      VALUES
+      (
+         SEQ_ATTENDANCE_NO.NEXTVAL
+         ,#{no}
+         ,TO_DATE(TO_CHAR(SYSTIMESTAMP, 'YYYY-MM-DD HH24:MI'), 'YYYY-MM-DD HH24:MI')
+      )
+   </insert>
+   
+   <update id="leave">
+      UPDATE ATTENDANCE
+      SET LEAVE_TIME = TO_DATE(TO_CHAR(SYSTIMESTAMP, 'YYYY-MM-DD HH24:MI'), 'YYYY-MM-DD HH24:MI')
+         ,STATUS = 'X'
+      WHERE MEMBER_NO = #{no} 
+      AND NO IN (
+          SELECT NO
+          FROM ATTENDANCE
+          ORDER BY NO DESC
+          FETCH FIRST 1 ROW ONLY
+      )
+      
+   </update>
+   
+	<select id="mCount" resultType="int">
+		SELECT
+		COUNT(*)
+		FROM PATIENT
+		WHERE GENDER = 'M'
+	</select>
+	
+	<select id="fCount" resultType="int">
+		SELECT
+		COUNT(*)
+		FROM PATIENT
+		WHERE GENDER = 'F'
+	</select>
+	
+	<select id="nineCount" resultType="int">
+		SELECT
+		COUNT(*)
+		FROM PATIENT
+		WHERE REGISTRATION_NUMBER BETWEEN 9000000000000 AND 9999999999999
+	</select>
+	
+	
+	<select id="eightCount" resultType="int">
+		SELECT
+		COUNT(*)
+		FROM PATIENT
+		WHERE REGISTRATION_NUMBER BETWEEN 8000000000000 AND 8999999999999
+
+	</select>
+	
+	<select id="sevenCount" resultType="int">
+		SELECT
+		COUNT(*)
+		FROM PATIENT
+		WHERE REGISTRATION_NUMBER BETWEEN 7000000000000 AND 7999999999999
+
+	</select>
+	
+	<select id="sixCount" resultType="int">
+		SELECT
+		COUNT(*)
+		FROM PATIENT
+		WHERE REGISTRATION_NUMBER BETWEEN 6000000000000 AND 6999999999999
+	</select>
+	
+	<select id="fiveCount" resultType="int">
+		SELECT
+		COUNT(*)
+		FROM PATIENT
+		WHERE REGISTRATION_NUMBER BETWEEN 5000000000000 AND 5999999999999
+
+	</select>
+	
+	<select id="operation" resultType="com.kh.app.operation.vo.OperationVo">
+		SELECT 
+		OPERATION_NAME
+		,START_DATE
+		,END_DATE
+		,PARTICIPANT_NO
+		FROM OPERATION_SCHEDULE OS
+		JOIN PARTICIPANT PC ON PC.OPERATION_SCHEDULE_NO = OS.NO
+		WHERE PARTICIPANT_NO = #{no}
+		AND OS.STATUS ='O'
+	</select>
+	
+</mapper>

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="prescription">
+	<!-- 환자 조회 -->
+	<select id="selectList" resultType="com.kh.app.patient.vo.PatientVo">
+		SELECT 
+			NO
+			,NAME
+			,GENDER
+			,REGISTRATION_NUMBER
+			,PHONE_NUMBER
+			,EMAIL
+			,CAUTION	
+		FROM PATIENT
+	</select>
+	
+	<insert id="write">
+		INSERT INTO PRESCRIPTION_LIST
+		(
+			NO
+			,PRESCRIPTION_NO
+			,MEDICINE
+			,TOTAL_DAY
+			,DOSE
+			,USAGE
+			,NAME
+		)
+		VALUES
+		(
+			SEQ_PRESCRIPTION_LIST_NO.NEXTVAL
+			,#{patientNo}
+			,#{medicine}
+			,#{totalDay}
+			,#{dose}
+			,#{usage}
+			,#{name}
+		)
+		
+	</insert>
+	
+	<insert id="insertPL">
+		INSERT INTO PRESCRIPTION
+	    (
+		   NO
+		   ,PATIENT_NO
+		)
+	    VALUES
+	    (
+	    	SEQ_PRESCRIPTION_NO.NEXTVAL
+		    ,#{patientNo}
+	    )
+	</insert>
+	
+	<select id="getPrescriptionListCnt" resultType="int">
+		SELECT COUNT(*)
+		FROM PRESCRIPTION_LIST
+		<where>
+	        <if test="searchType == 'name' and searchValue != '' and searchValue != null">
+	            AND NAME LIKE '%${searchValue}%'
+	        </if>
+	    </where>
+	</select>
+	
+	<select id="PrescriptionList" resultType="com.kh.app.patient.vo.PatientVo">
+		SELECT 
+		NO
+		,NAME
+		
+		FROM PRESCRIPTION_LIST 
+		<if test="searchType == 'name' and searchValue != '' and searchValue != null">		
+		WHERE ${searchType} LIKE '%${searchValue}%'
+		</if>
+		ORDER BY NO DESC
+	</select>
+	
+	<select id="detail" resultType="com.kh.app.prescription.vo.PrescriptionVo">
+		SELECT
+		NO
+		,PRESCRIPTION_NO
+		,MEDICINE
+		,TOTAL_DAY
+		,DOSE
+		,USAGE
+		,NAME
+		FROM PRESCRIPTION_LIST
+		WHERE NO = #{no}
+		AND NAME = #{name}
+	</select>
+	
+</mapper>

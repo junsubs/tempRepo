@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="admission">
+	<select id="getRoomCount" resultType="int">
+		SELECT COUNT(NO) FROM INPATIENT
+		<if test="searchType != null and searchType != '' and searchValue != null and searchValue != ''">
+			WHERE MAX_CAPACITY LIKE '%${searchValue}%'		
+		</if>
+	</select>
+	
+	<select id="getRoomList" resultType="com.kh.app.admission.vo.AdmissionVo">
+		SELECT NO, MAX_CAPACITY,INPATIENT_POSITION FROM INPATIENT
+		<if test="searchType != null and searchType != '' and searchValue != null and searchValue != ''">
+			WHERE MAX_CAPACITY LIKE '%${searchValue}%'		
+		</if>
+	</select>
+	
+	
+	<select id="getNumberOfPatients" resultType="com.kh.app.admission.vo.AdmissionVo">
+		SELECT I.NO AS NO, COUNT(IL.PATIENT_NO) AS NUMBER_OF_PATIENTS
+		FROM INPATIENT I
+		LEFT JOIN INPATIENT_LIST IL ON I.NO = IL.INPATIENT_NO
+		GROUP BY I.NO
+	</select>
+	
+	<select id="searchPatient" resultType="com.kh.app.patient.vo.PatientVo">
+		SELECT 
+	    NO,
+	    NAME,
+	    GENDER,
+	    CASE
+	        WHEN gender = 'M' THEN RPAD(SUBSTR(registration_number, 1, 7) || '-1******', LENGTH(registration_number), '*')
+	        WHEN gender = 'F' THEN RPAD(SUBSTR(registration_number, 1, 7) || '-2******', LENGTH(registration_number), '*')
+	        ELSE registration_number
+	    END AS REGISTRATION_NUMBER,
+	    PHONE_NUMBER,
+	    EMAIL,
+	    CAUTION 
+	FROM 
+	    PATIENT 
+	WHERE 
+	    NAME = #{name}
+	</select>
+	
+	<insert id="registerPatient">
+		INSERT INTO ADMISSION_RECORD(NO, PATIENT_NO, INPATIENT_NO, REASON, ADMISSION_DATE)
+		VALUES(SEQ_ADMISSION_RECORD_NO.NEXTVAL, #{patientNo}, #{no}, #{reason}, TO_TIMESTAMP(#{admissionDate}, 'YYYY-MM-DD"T"HH24:MI'))
+	</insert>
+	
+	<insert id="insertInpatientList">
+		INSERT INTO INPATIENT_LIST(NO, INPATIENT_NO, PATIENT_NO) VALUES(SEQ_INPATIENT_LIST_NO.NEXTVAL, #{no}, #{patientNo}) 
+	</insert>
+	
+	<select id="getScheduleList" resultType="com.kh.app.admission.vo.AdmissionVo">
+		SELECT R.NO AS ADMISSION_RECORD_NO, R.PATIENT_NO, P.NAME AS PATIENT_NAME, R.INPATIENT_NO AS NO, R.ADMISSION_DATE, R.DISCHARGE_DATE, I.INPATIENT_POSITION 
+		FROM ADMISSION_RECORD R 
+		JOIN INPATIENT I 
+		ON I.NO = R.INPATIENT_NO 
+		JOIN PATIENT P 
+		ON P.NO = R.PATIENT_NO
+		<if test="searchType != null and searchType != '' and searchValue != null and searchValue != ''">
+			WHERE P.NAME LIKE '%${searchValue}%'		
+		</if>
+		ORDER BY R.NO DESC
+		
+	</select>
+	
+	<select id="goDetailAdmissionRecord" resultType="com.kh.app.admission.vo.AdmissionVo">
+		SELECT R.NO AS ADMISSION_RECORD_NO, R.PATIENT_NO, P.NAME AS PATIENT_NAME, R.INPATIENT_NO AS NO, R.REASON, R.ADMISSION_DATE, R.DISCHARGE_DATE 
+		FROM ADMISSION_RECORD R 
+		JOIN PATIENT P 
+		ON R.PATIENT_NO = P.NO 
+		WHERE R.NO = #{admissionRecordNo}
+	</select>
+	
+	<update id="updateAdmissionRecord">
+		UPDATE ADMISSION_RECORD SET DISCHARGE_DATE = TO_TIMESTAMP(#{dischargeDate}, 'YYYY-MM-DD"T"HH24:MI') WHERE NO = #{admissionRecordNo}
+	</update>
+	
+	<select id="getScheduleCount" resultType="int">
+		SELECT COUNT(A.NO) FROM ADMISSION_RECORD A JOIN PATIENT P ON P.NO = A.PATIENT_NO
+		<if test="searchType != null and searchType != '' and searchValue != null and searchValue != ''">
+			WHERE P.NAME LIKE '%${searchValue}%'		
+		</if>
+	</select>
+	
+	<select id="getPatientList" resultType="com.kh.app.patient.vo.PatientVo">
+		SELECT 
+	    NO,
+	    NAME,
+	    GENDER,
+	    CASE
+	        WHEN gender = 'M' THEN RPAD(SUBSTR(registration_number, 1, 7) || '-1******', LENGTH(registration_number), '*')
+	        WHEN gender = 'F' THEN RPAD(SUBSTR(registration_number, 1, 7) || '-2******', LENGTH(registration_number), '*')
+	        ELSE registration_number
+	    END AS REGISTRATION_NUMBER,
+	    PHONE_NUMBER,
+	    EMAIL,
+	    CAUTION 
+	FROM 
+	    PATIENT 
+	</select>
+</mapper>
