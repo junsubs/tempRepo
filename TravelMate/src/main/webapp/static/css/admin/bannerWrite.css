@@ -1,0 +1,105 @@
+/* 내용영역 */
+#content{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    left: 340px;
+    bottom: 620px;
+}
+
+#first-content>img{
+    margin-top: 130px;
+    margin-left: 100px;
+    width: 40px;
+    height: 50px;
+}
+
+#declaration{
+    position: absolute;
+    width: 1070px;
+    height: 1000px;
+    left: 150px;
+    top: 260px;
+    border-radius: 30px;
+    border: 1px dashed black;
+    font-size: 18px;
+    background-image: url(/TravelMate/static/img/bannerWrite.png);
+    display: grid;
+    grid-template-columns: 1fr 4fr 2fr;
+    grid-template-rows: 2fr 1fr 6fr 1fr 1fr 2fr;
+    padding-left: 80px;
+    padding-top: 60px;
+}
+
+#declaration div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 22px;
+    font-weight: 600;
+}
+
+#declaration input[name="bannerName"]{
+    width: 530px;
+    height: 40px;
+    display: flex;
+    align-self: center;
+    font-size: 22px;
+    grid-column: span 2;
+}
+
+#declaration input[name="bannerImg"]{
+    font-size: 18px;
+    grid-column: span 2;
+    display: flex;
+    align-self: center;
+}
+
+#img-area{
+    grid-column: span 3;
+    display: flex;
+    align-self: center;
+    width: 350px;
+    height: 350px;
+    margin-left: 140px;
+}
+
+#img-area img{
+    width: 350px;
+    height: 350px;
+}
+
+#declaration input[name="memberNick"], input[name="souvenirName"]{
+    font-size: 22px;
+    grid-column: span 2;
+    display: flex;
+    align-self: center;
+    width: 530px;
+    height: 40px;
+}
+
+#declaration input[name="productNo"]{
+    font-size: 22px;
+    grid-column: span 2;
+    display: flex;
+    align-self: center;
+    width: 530px;
+    height: 40px;
+}
+
+#declaration input[type="submit"]{
+    border: 0;
+    text-align: center;
+    border-radius: 6px;
+    width: 110px;
+    height: 40px;
+    font-size: 17px;
+    background-color: #08354D;
+    color:white;
+    cursor: pointer;
+    display: flex;
+    align-self: center;
+    justify-content: center;
+    grid-column: span 3;
+    margin-left: 350px;
+}

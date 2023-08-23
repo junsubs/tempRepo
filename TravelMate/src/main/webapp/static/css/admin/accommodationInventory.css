@@ -1,0 +1,273 @@
+/* 내용영역 */
+#content{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    left: 370px;
+    bottom: 520px;
+}
+
+#first-content>img{
+    margin-top: 130px;
+    margin-left: 100px;
+    width: 40px;
+    height: 50px;
+}
+
+#content>#first-content>hr:nth-child(2){
+    height: 1px;
+    width: 1170px;
+    background-color: rgb(116, 116, 116);
+    border: 0px solid rgb(65, 65, 65);
+    position: absolute;
+    left: 100px;
+    top: 180px;
+}
+
+#content>#first-content>a:nth-child(3){
+    position: absolute;
+    left: 160px;
+    top: 135px;
+    color: #08354D;
+    font-size: 26px;
+    font-weight: bold;
+}
+
+#declaration{
+    position: absolute;
+    width: 1070px;
+    height: 1100px;
+    left: 150px;
+    top: 260px;
+    border-radius: 30px;
+    border: 1px dashed black;
+    font-size: 20px;
+    display: grid;
+    grid-template-columns: 50px 400px 200px 50px 370px;
+    grid-template-rows: repeat(23, 43px);
+}
+
+#declaration>div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+    position: relative;
+    top: 10px;
+}
+
+#img-area01{
+    grid-row: span 7;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 40px;
+}
+
+#hr011{
+    grid-column: span 5;
+    width: 1070px;
+    height: 1px;
+    border: 1px solid rgba(160, 160, 160, 0.547);
+    margin-bottom: 20px;
+}
+
+#page-area{
+    grid-column: span 5;
+}
+
+#page-area>a{
+    font-size: 18px;
+    margin: 20px;
+}
+
+#page-area>a:focus{
+    text-decoration: solid;
+    background-color: #96C378;
+}
+
+#hr>hr{
+    width: 1070px;
+}
+
+#name1, #name2, #name3, #name4, #name5, #name6, #name7{
+    background-color: #79b3d067;
+}
+
+#declaration img{
+    width: 300px;
+    height: 240px;
+}
+
+
+input[type="text"], input[type="date"]{
+    width: 300px;
+    background: none;
+    border: none;
+    font-size: 20px;
+}
+
+#code, #dName, #localArea, #dPrice, #dEnroll, #dYn, #dCount{
+    display: flex;
+    justify-content: start;
+    margin-right: 70px;
+}
+
+#dCount{
+    margin-right: 70px;
+}
+
+#dCount label{
+    margin-right: 15px;
+}
+
+input[type="number"]{
+    width: 80px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    border: 1px solid black;
+    margin-right: 220px;
+}
+
+select[name="searchType"]{
+    width: 130px;
+    height: 40px;
+    font-size: 16px;
+    margin-right: 5px;
+    position: absolute;
+    right: 225px;
+}
+
+.semiCategory{
+    width: 220px;
+    height: 40px;
+    font-size: 16px;
+    position: absolute;
+    right: 0px;
+    display: none;
+    -webkit-appearance:none; /* 크롬 화살표 없애기 */
+}
+
+.active{
+    display: block;
+}
+
+.hidden{
+    display: none;
+}
+
+#cbx{
+    grid-row: span 7;
+}
+
+input[type="checkbox"]{
+    width: 20px;
+    height: 20px;
+}
+
+/* 카테고리 및 검색 */
+#report-search input[type="submit"]{
+    background-image: url('/TravelMate/static/img/검색이미지.png');
+    background-repeat: no-repeat;
+    background-color: rgba(255, 255, 255, 0);
+    border: 0px;
+    cursor:pointer;
+    outline: 0;
+    color: rgba(255, 255, 255, 0);
+    position: absolute;
+    right: -5px;
+    top: 8px;
+}
+
+#report-search{
+    position: absolute;
+    right: 670px;
+    top: 134px;
+}
+
+#report-search>form>input[type="text"]{
+    width: 220px;
+    height: 40px;
+    font-size: 16px;
+    background-color: white;
+    border: 1px solid gray;
+}
+
+select[name="searchType"]{
+    width: 130px;
+    height: 40px;
+    font-size: 16px;
+    margin-right: 5px;
+}
+
+/* 세부내용영역 */
+#countEdit{
+    border: 0;
+    display: inline-block;
+    text-align: center;
+    border-radius: 6px;
+    width: 80px;
+    height: 35px;
+    font-size: 17px;
+    background-color: #08354D;
+    color:white;
+    cursor: pointer;
+    position: relative;
+    left: 1100px;
+    top: 1100px;
+}
+
+#write{
+    border: 0;
+    display: inline-block;
+    text-align: center;
+    border-radius: 6px;
+    width: 80px;
+    height: 35px;
+    font-size: 17px;
+    background-color: #08354D;
+    color:white;
+    cursor: pointer;
+    position: relative;
+    left: 1100px;
+    top: 1100px;
+}
+
+#edit{
+    border: 0;
+    display: inline-block;
+    text-align: center;
+    border-radius: 6px;
+    width: 80px;
+    height: 35px;
+    font-size: 17px;
+    background-color: #08354D;
+    color:white;
+    cursor: pointer;
+    position: relative;
+    left: 430px;
+}
+
+#edit:hover, #write:hover{
+    cursor: pointer;
+    background-color: #96C378;
+}
+
+/* 체크박스 */
+.chk_box { 
+    display: flex;
+    position: relative;
+    padding-left: 25px;
+    cursor: pointer;
+    font-size: 14px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.chk_box input[type="checkbox"] { display: none;}
+.on { width: 28px; height: 28px; background: #ddd; position: absolute; top: 0; left: 0;}
+.chk_box input[type="checkbox"]:checked + .on { background: #558B32;}
+.on:after { content: ""; position: absolute; display: none; }
+.chk_box input[type="checkbox"]:checked + .on:after { display: block; }
+.on:after { width: 15px; height: 15px; border: solid #fff; border-width: 0 2px 2px 0; -webkit-transform: rotate(45deg); -ms-transform: rotate(45deg); transform: rotate(45deg); position: absolute; left: 6px; top: 2px; }

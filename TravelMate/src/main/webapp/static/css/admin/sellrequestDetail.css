@@ -1,0 +1,115 @@
+/* 내용영역 */
+#content{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    left: 340px;
+    bottom: 620px;
+}
+
+#first-content>img{
+    margin-top: 130px;
+    margin-left: 100px;
+    width: 40px;
+    height: 50px;
+}
+
+#declaration{
+    position: absolute;
+    width: 1070px;
+    height: 1000px;
+    left: 150px;
+    top: 260px;
+    border-radius: 30px;
+    border: 1px dashed black;
+    font-size: 20px;
+    background-image: url(/TravelMate/static/img/bannerWrite.png);
+    display: grid;
+    grid-template-columns: 2fr 5fr 1fr;
+    grid-template-rows: repeat(10, 1fr);
+    padding-left: 80px;
+}
+
+#declaration div{
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    position: relative;
+    top: 70px;
+}
+
+#declaration>div:nth-child(even){
+    grid-column: span 2;
+    width: 500px;
+    height: 50px;
+}
+
+#declaration input[type="text"]{
+    width: 500px;
+    height: 50px;
+    font-size: 18px;
+    border-top: 1px solid #08354d54;
+    border-bottom: 1px solid #08354d54;
+    border-left: none;
+    border-right: none;
+    background: none;
+    color: #08354D;
+    font-weight: 600;
+}
+
+#declaration>#close{
+    border: 0;
+    text-align: center;
+    border-radius: 6px;
+    width: 110px;
+    height: 40px;
+    font-size: 17px;
+    background-color: #08354D;
+    color:white;
+    cursor: pointer;
+    display: flex;
+    align-self: center;
+    justify-content: center;
+    grid-column: span 3;
+    margin-left: 280px;
+    display: flex;
+    align-items: center;
+    margin-bottom: -610px;
+}
+
+#img-area{
+    width: 300px;
+    height: 300px;
+}
+
+#img-area img{
+    width: 300px;
+    height: 300px;
+    margin-right: 200px;
+}
+
+#sellNo{
+    border: 0;
+    text-align: center;
+    border-radius: 6px;
+    width: 110px;
+    height: 40px;
+    font-size: 17px;
+    background-color: #08354D;
+    color:white;
+    cursor: pointer;
+    display: flex;
+    align-self: center;
+    justify-content: center;
+    grid-column: span 3;
+    margin-left: 350px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    bottom: 386px;
+    left: 640px;
+}
+
+#declaration>#close:hover, #sellNo:hover{
+    background-color: #96C378;
+}
