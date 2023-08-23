@@ -1,0 +1,292 @@
+/* 내용영역 */
+#content{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    left: 370px;
+    bottom: 520px;
+}
+
+#first-content>img{
+    margin-top: 130px;
+    margin-left: 100px;
+    width: 40px;
+    height: 50px;
+}
+
+#content>#first-content>hr:nth-child(2){
+    height: 1px;
+    width: 1170px;
+    background-color: rgb(116, 116, 116);
+    border: 0px solid rgb(65, 65, 65);
+    position: absolute;
+    left: 100px;
+    top: 180px;
+}
+
+#content>#first-content>a:nth-child(3){
+    position: absolute;
+    left: 160px;
+    top: 135px;
+    color: #08354D;
+    font-size: 26px;
+    font-weight: bold;
+}
+
+#declaration{
+    position: absolute;
+    width: 1070px;
+    height: 1000px;
+    left: 150px;
+    top: 260px;
+    border-radius: 30px;
+    border: 1px dashed black;
+    font-size: 18px;
+    display: grid;
+    grid-template-columns: 1fr 2fr 2fr 3fr 2fr 3fr;
+    grid-template-rows: 80px 30px 50px 30px 50px 30px 50px 30px 50px 30px 50px 30px 50px 30px 50px 50px 30px;
+}
+
+#declaration>div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#hr, #hr2, #hr3, #hr4{grid-column: span 6}
+
+#declaration>div:first-child, #declaration>div:nth-child(2), #declaration>div:nth-child(3),
+#declaration>div:nth-child(4), #declaration>div:nth-child(5), #declaration>div:nth-child(6){
+    margin-top: 20px;
+    font-size: 21px;
+}
+
+#hr>hr, #hr2>hr, #hr3>hr, #hr4>hr{
+    width: 1070px;
+    color: black;
+}
+
+/* 카테고리 및 검색 */
+
+#report-search input[type="submit"]{
+    background-image: url('/TravelMate/static/img/검색이미지.png');
+    background-repeat: no-repeat;
+    background-color: rgba(255, 255, 255, 0);
+    border: 0px;
+    cursor:pointer;
+    outline: 0;
+    color: rgba(255, 255, 255, 0);
+    position: absolute;
+    right: -5px;
+    top: 8px;
+}
+
+#no:hover{
+    background-color: rgba(122, 196, 122, 0.451);
+    cursor: pointer;
+}
+
+#report-search{
+    position: absolute;
+    right: 670px;
+    top: 134px;
+}
+
+#report-search>form>input[type="text"]{
+    width: 220px;
+    height: 40px;
+    font-size: 16px;
+}
+
+select[name="searchType"]{
+    width: 130px;
+    height: 40px;
+    font-size: 16px;
+    margin-right: 5px;
+    position: absolute;
+    right: 225px;
+}
+
+/* 세부내용영역 */
+.chk_box { 
+    display: flex;
+    position: relative;
+    padding-left: 25px;
+    cursor: pointer;
+    font-size: 14px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.chk_box input[type="checkbox"] { display: none;}
+.on { width: 28px; height: 28px; background: #ddd; position: absolute; top: 0; left: 0;}
+.chk_box input[type="checkbox"]:checked + .on { background: #558B32;}
+.on:after { content: ""; position: absolute; display: none; }
+.chk_box input[type="checkbox"]:checked + .on:after { display: block; }
+.on:after { width: 15px; height: 15px; border: solid #fff; border-width: 0 2px 2px 0; -webkit-transform: rotate(45deg); -ms-transform: rotate(45deg); transform: rotate(45deg); position: absolute; left: 6px; top: 2px; }
+
+#moreList{
+    border: 0;
+    display: inline-block;
+    text-align: center;
+    border-radius: 6px;
+    width: 110px;
+    height: 40px;
+    font-size: 17px;
+    background-color: #08354D;
+    color:white;
+    cursor: pointer;
+    position: relative;
+    left: 900px;
+}
+
+#report-content label, #report-content input, #report-content span{
+    margin-bottom: 30px;
+}
+
+button:hover, input[type="submit"]:hover, #memberStop:hover {background-color: #96C378; color: black;}
+
+#page-area{
+    grid-column: span 6;
+}
+
+#page-area>a{
+    font-size: 18px;
+    margin: 20px;
+}
+
+#page-area>a:focus{
+    text-decoration: solid;
+    background-color: #96C378;
+}
+
+.semiCategory{
+    width: 220px;
+    height: 40px;
+    font-size: 16px;
+    position: absolute;
+    right: 0px;
+    display: none;
+    -webkit-appearance:none; /* 크롬 화살표 없애기 */
+}
+
+.active{
+    display: block;
+}
+
+.hidden{
+    display: none;
+}
+
+#noResult{
+    grid-column: span 6;
+    grid-row: span 17;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#noResult>h4{
+    font-size: 22px;
+    font-weight: 600;
+}
+
+#reportCancel{
+    border: 0;
+    text-align: center;
+    border-radius: 6px;
+    width: 80px;
+    height: 40px;
+    font-size: 17px;
+    background-color: #08354D;
+    color:white;
+    cursor: pointer;
+    margin-left: 20px;
+}
+
+#reportCancel:hover{
+    background-color: #96C378;
+}
+
+/* 모달부분 */
+#reportMore{
+    display: none;
+    margin-left: 400px;
+    margin-top: -500px;
+}
+
+.stop-active1{
+    width: 500px;
+    height: 500px;
+    background-color: rgb(232, 232, 232);
+    border: 1px solid black;
+    position: fixed;
+    box-shadow : rgba(0, 0, 0, 0.791) 0 0 0 9999px;
+    z-index: 8;
+    display: inline-block;
+    font-size: 20px;
+}
+
+
+#modal-content{
+    width: 500px;
+    height: 500px;
+    display: grid;
+    grid-template-columns: 200px 30px 270px;
+    grid-template-rows: repeat(9, 1fr);
+}
+
+#close{
+    grid-column: span 3;
+    display: flex;
+    justify-content: end;
+    margin-top: 5px;
+    border-bottom: 1px dashed black;
+}
+
+#close svg{
+    margin-right: 10px;
+}
+
+#close svg:hover{
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.193);
+}
+
+#modal-content div:nth-child(4), #modal-content div:nth-child(7),
+#modal-content div:nth-child(10), #modal-content div:nth-child(13),
+#modal-content div:nth-child(16), #modal-content div:nth-child(19),
+#modal-content div:nth-child(22){
+    color: #558B32;
+    display: flex;
+    justify-content:center;
+    margin-top: 30px;
+}
+
+#modal-content div:nth-child(3), #modal-content div:nth-child(6),
+#modal-content div:nth-child(9), #modal-content div:nth-child(12),
+#modal-content div:nth-child(15), #modal-content div:nth-child(18),
+#modal-content div:nth-child(21){
+    color: #b5b5b5;
+    display: flex;
+    justify-content:end;
+    margin-top: 30px;
+    margin-left: 60px;
+}
+
+#modal-content div:nth-child(2), #modal-content div:nth-child(5),
+#modal-content div:nth-child(8), #modal-content div:nth-child(11),
+#modal-content div:nth-child(14), #modal-content div:nth-child(17),
+#modal-content div:nth-child(20){
+    display: flex;
+    margin-top: 30px;
+    margin-left: 80px;
+}
+
+
+
+/* body 스크롤 방지용 */
+.stop-scroll{
+    overflow: hidden;
+  }
